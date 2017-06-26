@@ -4,7 +4,7 @@ React Desktop Apps lets you take advantage the adaptiveness, navigation and deep
 Web-based UI, the productivity and responsiveness of the 
 [React framework](https://facebook.github.io/react/),
 the performance, depth of features and functionality in 
-[ServiceStack Libraries](https://servicestack.net/download) and .NET Framework combined with the rich 
+[ServiceStack](http://docs.servicestack.net) and .NET Framework combined with the rich 
 native experience and OS Integration possible from a Native Desktop App - all in a single VS .NET template.
 
 ![React Desktop Apps](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/gap/react-desktop-splash.png)
