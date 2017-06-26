@@ -15,7 +15,7 @@ namespace DefaultApp.AppMac
 
 		static void Main (string[] args)
 		{
-            System.Web.Util.HttpEncoder.Current = System.Web.Util.HttpEncoder.Default;
+			System.Web.Util.HttpEncoder.Current = System.Web.Util.HttpEncoder.Default;
 
 			App = new AppHost();
 			App.Init().Start("http://*:2337/");
