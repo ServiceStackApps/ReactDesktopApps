@@ -10,17 +10,20 @@ native experience and OS Integration possible from a Native Desktop App - all in
 ![React Desktop Apps](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/gap/react-desktop-splash.png)
 
 The new **React Desktop Apps** template in 
-[ServiceStackVS](https://visualstudiogallery.msdn.microsoft.com/5bd40817-0986-444d-a77d-482e43a48da7) 
-provides everything you need to package your ASP.NET ServiceStack Web App into a native Windows Winforms App, 
-OSX Cocoa Desktop App or cross-platform (Windows/OSX/Linux) "headless" Console App which instead of being 
-embedded inside a Native UI, launches the User's prefered Web Browser for its Web UI.
+[ServiceStackVS](https://github.com/ServiceStack/ServiceStackVS) 
+provides everything you need to package your ASP.NET ServiceStack Web App into a native Windows **Winforms App**, 
+an **OSX Cocoa Desktop App** or cross-platform (Windows/OSX/Linux) "headless" **Console App** which instead of being 
+embedded inside a Native UI, launches the User's prefered Web Browser for its Web UI. The **Winforms App** also 
+includes auto updating support where deployed Desktop Apps can be updated by just publishing a new GitHub Release.
 
 This Hybrid model of developing Desktop Apps with modern WebKit technologies offers a more productive and 
 reusable alternative to developing bespoke WPF Apps in XAML or Cocoa OSX Apps with Xcode. 
 It enables full code reuse of the Web App whilst still allowing for platform specific .js, .css and 
 C# specialization when needed. These advantages are also why GitHub also adopted a similar approach for 
 their new cross-platform UI in their flagship 
-[Windows and OSX Desktop Apps](http://githubengineering.com/cross-platform-ui-in-github-desktop/).
+[Windows and OSX Desktop Apps](http://githubengineering.com/cross-platform-ui-in-github-desktop/) which leverages
+the same [CefSharp](https://github.com/cefsharp/CefSharp) Chromium Embedded Framework Component to render its UI
+on Windows.
 
 ### Single Installer-less Executable
 
@@ -28,7 +31,7 @@ Each application is compiled into a single executable that's xcopy-able and runn
 Software install. The only pre-requisite is the .NET 4.5 Framework on Windows
 (pre-installed on recent versions of Windows) or 
 [Mono on Linux](http://www.mono-project.com/docs/getting-started/install/linux/). 
-The OSX Cocoa Xamarin.Mac App has the option to bundle the Mono runtime alleviating the need for users to
+The OSX Cocoa **Xamarin.Mac** App has the option to bundle the Mono runtime alleviating the need for users to
 have an existing install of Mono.
 
 ### React Desktop App VS.NET Template
@@ -39,27 +42,27 @@ allowing for a simplified and iterative dev workflow by running the preferred Ho
 
 - **Web** - ASP.NET Web Application
 - **Windows** - Native Windows application embedded in a CefSharp Chromium browser
-- **OSX** - Native OS X Cocoa App embedded in a WebView control (requires Xamarin.Mac)
+- **OSX** - Native OS X Cocoa App embedded in a WebView control (requires [Visual Studio for Mac](https://www.visualstudio.com/vs/visual-studio-mac/))
 - **Console** - Single portable, cross platform executable that launches the user's prefered browser
 
 ## Downloads
 
 #### Windows Winforms App
 
-[DefaultApp-winforms.exe](https://github.com/ServiceStackApps/ReactDesktopApps/releases/download/v1.1.0.0/Setup.exe) (39.1 MB)
+[DefaultApp-winforms.exe](https://github.com/ServiceStackApps/ReactDesktopApps/releases/download/1.0.0.0/Setup.exe) (39.4 MB)
 
 #### OSX Cocoa App
 
-[DefaultApp.AppMac.app.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp.AppMac.app.zip) (4.1 MB)
+[DefaultApp.AppMac.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp.AppMac.zip) (25.4 MB)
 
 #### Console App (Windows/OSX/Linux)
 
-[DefaultApp-console.exe](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.exe) (4.8 MB) or [DefaultApp-console.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.zip) (1.5 MB)
+[DefaultApp-console.exe](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.exe) (5.6 MB) or [DefaultApp-console.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.zip) (2 MB)
 
 ## Project Structure
 
 The resulting project structure is the same as the 
-[React App](https://github.com/ServiceStackApps/Chat-React#modern-reactjs-apps-with-net) VS.NET Template, 
+[Webpack React App VS.NET Template](/templates-single-page-apps), 
 but with 3 additional projects for hosting the new Desktop and Console Apps and a Common **Resources** project
 shared by Host projects containing all the ASP.NET resources (e.g. .css, .js, images, etc) as embedded
 resources. It's kept in-sync with the primary **DefaultApp** project with the `01-bundle-all` or `default` 
@@ -81,13 +84,12 @@ Gulp tasks.
 
  - **DefaultApp.AppMac** - OSX Cocoa Host project
 
-This is a Xamarin Studio project which can be built with Xamarin.Mac and uses the compiled embedded resources
-`lib\DefaultApp.Resources.dll` created by the **01-bundle-all** Gulp task.
+This is a Visual Studio for Mac project which uses the compiled embedded resources `lib\DefaultApp.Resources.dll` created by the **01-bundle-all** Gulp task.
 
 ### DefaultApp Project
 
 The primary **DefaultApp** project contains the complete React Web App hosted in an ASP.NET Project. 
-It includes `Gulpfile.js` which provides the necessary Gulp tasks to bundle and optimize the Wep Application 
+It includes `gulpfile.js` which provides the necessary Gulp tasks to bundle and optimize the Wep Application 
 ready for deployment as well as Gulp tasks to minify the Web Applications assets and publishes them 
 embedded resources into the shared **DefaultApp.Resources** project. This project is how the React WebApp
 is made available to the alternative Desktop and Console Apps.
@@ -95,9 +97,8 @@ is made available to the alternative Desktop and Console Apps.
 The primary Gulp Tasks you'll use to package and deploy your App
 which is easily runnable from VS .NET's 
 [Task Runner Explorer](https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708)
-which is built into VS 2015.
+which is built into VS 2015 and VS 2017.
 
-- **default** - Runs `01-bundle-all` and creates packages for `02-package-console` and `03-package-winforms`
 - [**01-bundle-all**](#01-bundle-all) - optimizes and packages Web App the into `wwwroot` and `Resources` project
 - [**02-package-console**](#02-package-console) - Packages the Console App in `wwwroot_build\apps`
 - [**02-package-winforms**](#02-package-winforms) - Packages the Winforms App in `wwwroot_build\apps`
@@ -109,19 +110,19 @@ or Mono pre-installed.
 
 Downloads for the Default Template Console App:
 
-#### [DefaultApp-console.exe](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.exe) (4.8MB) or [DefaultApp-console.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.zip) (1.5MB)
+#### [DefaultApp-console.exe](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.exe) (5.6MB) or [DefaultApp-console.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp-console.zip) (2MB)
 
 For WinForms we are taking advantage of Squirrel.Windows to produce our Windows installer and handle updating of our Windows client application.
 Squirrel.Windows is run via the `02-package-winforms` Gulp task and produces us a `Setup.exe` that auto runs our application on install.
 We can then release and manage updates of this application using GitHub releases. Our client application will check GitHub for new versions, then 
 download and install them if any are available.
 
-To package the OSX App you'll need to open the **DefaultAppMac.sln** in Xamarin.Studio on OSX which packages
+To package the OSX App you'll need to open the **DefaultAppMac.sln** in Visual Studio for Mac on OSX which packages
 the App as on OSX App or Installer. 
 
 Download for the Default Template OSX Cocoa App: 
 
-#### [DefaultApp.AppMac.app.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp.AppMac.app.zip) (4.1 MB)
+#### [DefaultApp.AppMac.zip](https://github.com/ServiceStackApps/ReactDesktopApps/raw/master/dist/DefaultApp.AppMac.zip) (24.8 MB)
 
 ### [wwwroot_build](https://github.com/ServiceStackApps/ReactDesktopApps/tree/master/src/DefaultApp/DefaultApp/DefaultApp/wwwroot_build)
 
@@ -137,7 +138,6 @@ The necessary infrastructure for optimizing, packaging the React Web Application
     config.json               # deployment config for WebDeploy IIS deployments
   /tools                      # deployment tools for Console and Winforms Apps
     ILMerge.exe			      # ILMerge to merge console app output into single binary
-  00-install-dependencies     # runs npm install, used to download deps after first clone (VS2015 does this for you)
   package-deploy-console.bat  # runs ILMerge to package Console App
 ```
 
@@ -155,7 +155,7 @@ and UserName/Password of an Account with permission to deploy a Website with MS 
 }
 ```
 
-Then run the `04-deploy-webapp` Gulp task to package the optimized React App in `/wwwroot` into a 
+Then run the `03-deploy-webapp` Gulp task to package the optimized React App in `/wwwroot` into a 
 `webdeploy.zip` package which it publishes to a remote IIS Web Server using the configuration above.
 
 > If you specify **Visual Studio** settings when creating a repo in GitHub its will ignore the `/publish` 
@@ -170,95 +170,59 @@ It also maximizes skill re-use where most development time will be spent develop
 React Web Application without any consideration for the different platforms the template create packages for. 
 
 The template follows the same
-[Modern React Apps with .NET](https://github.com/ServiceStackApps/Chat-React#modern-reactjs-apps-with-net)
+[Modern Webpack ASP.NET Apps](http://docs.servicestack.net/templates-single-page-apps)
 as ServiceStack's other Single Page App templates which uses node's rich ecosystem to enable access to premier
-Web technologies and pre-configured
-[Gulp](http://Gulpjs.com) and [Gulp](http://gulpjs.com) tasks to take care of website bundling, optimization,
-application packaging and ASP.NET Website deployemnts.
+Web technologies that's pre-configured with [Webpack](https://webpack.js.org) and 
+[Gulp](http://gulpjs.com) tasks to take care of website bundling, optimization, application packaging and ASP.NET Website deployemnts.
 
 The entire React application is hosted within a single static 
-[default.html](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/default.html)
-which is itself only used to structure the websites resources into logical groupings where 3rd Party 
-JavaScript libraries and CSS are kept isolated from your Application's source code. The groups are defined
-by HTML comments which instruct 
-[Gulps userref](https://www.npmjs.com/package/gulp-useref) plugin on how to minify and optimize your 
-Apps resources:
+[index.html](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/index.html)
+which is generated by Webpack based on 
+[index.template.ejs](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/index.template.ejs):
 
 ```html
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-
-    <!--build:css lib/css/lib.min.css -->
-    <link rel="stylesheet" href="jspm_packages/npm/bootstrap@3.2.0/css/bootstrap.css" />
-    <!-- endbuild -->
-    <!--build:css css/app.min.css-->
-    <link rel="stylesheet" href="css/app.css" />
-    <!-- endbuild -->
-    <link rel="stylesheet" href="/platform.css" />
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1">
     <title>DefaultApp</title>
 </head>
 <body>
-    <div id="content"></div>
-    <!-- build:js system.js -->
-    <script src="jspm_packages/system.js"></script>
-    <!-- endbuild -->
+    <link rel="stylesheet" href="/platform.css" />
 
-    <script src="config.js"></script>
-
-    <!-- build:remove -->
-    <script src="deps.lib.js"></script>
-    <!-- endbuild -->
-    <!-- htmlbuild:appbundle -->
-    <!-- endbuild -->
-
-    <script>
-        System.import("./src/app");
-    </script>
+    <div id="app"></div>
 
     <script src="/platform.js"></script>
 </body>
 </html>
 ```
 
-Since this template uses JSPM and TypeScript, unless you are including additional stylesheets, your main HTML file 
-shouldn't need updating.
-
-The `01-bundle-all` Gulp task takes care of bundling and copying all resources into the `/wwwroot` folder 
-and **DefaultApp.Resources** project, transforming it into the following
-[default.html](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp.Resources/default.html):
+The `01-bundle-all` Gulp task runs a Webpack production build that takes care of compiling your Apps TypeScript, CSS and SASS source files,
+bundling and copying all resources into the `/wwwroot` folder and **DefaultApp.Resources** project, transforming it into the following
+[index.html](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp.Resources/index.html):
 
 ```html
-<!-- Auto generated by DefaultApp\Gulpfile.js -->
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-
-    <link rel="stylesheet" href="/lib/css/lib.min.css">
-
-    <link rel="stylesheet" href="/css/app.min.css">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1">
+    <title>DefaultApp</title>
+    <link href="/dist/app.css" rel="stylesheet"></head>
+<body>
     <link rel="stylesheet" href="/platform.css" />
 
-    <script src="/lib/js/lib.min.js"></script>
-
-    <script src="/js/ss-utils.js"></script>
-       
-    <script src="/js/app.min.js"></script>
+    <div id="app"></div>
 
     <script src="/platform.js"></script>
-
-    <title>DefaultApp</title>
-</head>
-<body>
-    <script src="/js/app.jsx.js"></script>
+    <script type="text/javascript" src="/dist/vendor.bundle.js"></script>
+    <script type="text/javascript" src="/dist/app.bundle.js"></script>
 </body>
 </html>
 ```
-
 
 ### [DefaultApp.Resources](https://github.com/ServiceStackApps/ReactDesktopApps/tree/master/src/DefaultApp/DefaultApp/DefaultApp.Resources)
 
@@ -268,8 +232,8 @@ allowing the entire Web Application to be embedded inside the .NET **DefaultApp.
 This is what each of the Desktop and Console Application references to be able to host your Website.
 
 Should you wish to add additional resources outside these pre-defined groups you'll need to 
-[ensure they're copied over](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/Gulpfile.js#L4) 
-by Gulp and then have their **Build Action** set to `Embedded Resource`.
+[ensure they're copied over](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/webpack.config.js#L3) 
+by Webpack and then have their **Build Action** set to `Embedded Resource`.
 
 ![](https://github.com/ServiceStack/Assets/raw/master/img/servicestackvs/react-desktop-apps-embedded-resource.png)
 
@@ -279,18 +243,14 @@ in preparation for production deployment:
 
 ```
 /wwwroot
-  /css
-    app.min.css
-  /img              #  all application images
-  /lib
-    /css            # 3rd party css, eg bootstrap
-    /fonts          # 3rd party fonts
-    /js             # 3rd party minified JS
-      lib.min.js
-  app.js            # Result of JSPM bundle of application TypeScript and TSX files
-  config.js         # JSPM config.js
-  system.js         # JSPM system.js
-  default.cshtml/default.html
+  /dist
+    app.bundle.js     # Compiled and bundled TypeScript
+    app.css           # Bundled SASS and css
+    /img              # All application images
+      fontawesome-*   # 3rd party fonts
+  platform.css        # Platform-specific css
+  platform.js         # Platform-specific js
+  index.html      
 ```
 
 ## Host Projects
@@ -308,7 +268,7 @@ In addition, an easy way to limit which HTML elements are displayed is to use th
 hide the element, then specify which platforms it should be displayed in by listing the specific platforms, e.g:
 
 ```html
-<ul className="nav navbar-nav pull-right">
+<ul className="nav navbar-nav">
     <li><a onClick={this.handleAbout}>About</a></li>
     <li className="platform winforms">
         <a onClick={this.handleToggleWindow}>Toggle Window</a>
@@ -361,27 +321,17 @@ We want to attach it to the `window`, so we'll also need to append our `Window` 
 
 When running as a normal ASP.NET Web App these API's just call the browsers DOM:
 
-``` typescript
-/* web */
-interface Window {
-    nativeHost: any;
-}
-
-class WebNativeHost {
-    showAbout() {
-        alert("DefaultApp - ServiceStack + React");
-    }
-
-    toggleFormBorder() {}
-
-    quit() {
+```js
+window.nativeHost = {
+    quit: function () {
         window.close();
-    }
-	
-    ready() {}
-}
-
-window.nativeHost = window.nativeHost || new WebNativeHost();
+    },
+    showAbout: function () {
+        alert("DefaultApp - ServiceStack + React");
+    },
+    ready: function () { },
+    toggleFormBorder: function () { }
+};
 ```
 
 #### Console Native Host
@@ -393,14 +343,21 @@ Console Application:
 ```js
 /* console */
 window.nativeHost = {
-    quit: function() {
-        $.post('/nativehost/quit')
-            .then(function() {
-                window.close();
-            });
+    quit: function () {
+        var r = new XMLHttpRequest();
+        r.open("POST", "/nativehost/quit", true);
+        r.onreadystatechange = function () {
+            if (r.readyState != 4 || r.status != 200)
+                return;
+            window.close();
+        };
+        r.send("");
     },
-    showAbout: function() {
-        alert('ReactChat - ServiceStack + ReactJS');
+    showAbout: function () {
+        alert('ServiceStack SelfHost Console + React');
+    },
+    ready: function () {
+        //
     },
     platform: 'console'
 };
@@ -409,11 +366,6 @@ window.nativeHost = {
 Calls to `/nativehost` call the `NativeHostService` below:
 
 ```csharp
-public class NativeHostAction : IReturnVoid
-{
-    public string Action { get; set; }
-}
-
 public class NativeHostService : Service
 {
     public void Any(NativeHostAction request)
@@ -422,7 +374,7 @@ public class NativeHostService : Service
             throw HttpError.NotFound("Function Not Found");
 
         var nativeHost = typeof(NativeHost).CreateInstance<NativeHost>();
-        var methodName = request.Action.Substring(0,1).ToUpper()+request.Action.Substring(1);
+        var methodName = request.Action.Substring(0, 1).ToUpper() + request.Action.Substring(1);
         var methodInfo = typeof(NativeHost).GetMethod(methodName);
         if (methodInfo == null)
             throw new HttpError(HttpStatusCode.NotFound, "Function Not Found");
@@ -431,11 +383,20 @@ public class NativeHostService : Service
     }
 }
 
+public class NativeHostAction : IReturnVoid
+{
+    public string Action { get; set; }
+}
+
 public class NativeHost
 {
     public void Quit()
     {
-        Environment.Exit(0);
+        System.Threading.ThreadPool.QueueUserWorkItem(_ =>
+        {
+            System.Threading.Thread.Sleep(10);    // Allow /nativehost/quit to return gracefully
+            Environment.Exit(0);
+        });
     }
 }
 ```
@@ -501,13 +462,27 @@ via Ajax requests:
 /* mac */
 window.nativeHost = {
     quit: function () {
-        $.post('/nativehost/quit');
+        post('/nativehost/quit');
     },
     showAbout: function () {
-    	$.post('/nativehost/showAbout');
+    	post('/nativehost/showAbout');
+    },
+    ready: function () {
+        //
     },
     platform: 'mac'
 };
+
+function post(url, data, callback) {
+    var r = new XMLHttpRequest();
+    r.open("POST", url, true);
+    r.onreadystatechange = function () {
+        if (r.readyState != 4 || r.status != 200)
+            return;
+        callback(r.responseText);
+    };
+    r.send(data);
+}
 ```
 
 In the Cocoa App it uses a copy of the `NativeHostService` used in the Console App to proxy each call to the
@@ -595,7 +570,7 @@ public FormMain()
 
 ### [DefaultApp.AppMac](https://github.com/ServiceStackApps/ReactDesktopApps/tree/master/src/DefaultApp/DefaultApp/DefaultApp.AppMac)
 
-This project contains the OSX Cocoa Application which requires Xamarin.Mac on OSX to build.
+This project contains the OSX Cocoa Application which requires [Visual Studio for Mac](https://www.visualstudio.com/vs/visual-studio-mac/) on OSX to build.
 
 The entry point for the Cocoa Application is in 
 [Program.cs](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp.AppMac/Program.cs)
@@ -649,70 +624,31 @@ from the command-line with the `Gulp` script.
 
 ### 01-bundle-all
 
-Just like the AngularJS and React App template, we stage our application ready for release and avoid any build steps at development time to improve the simplicity and speed of the development workflow. This alias task is made up of small, simple tasks that use Gulp to process resources and perform tasks like minification, TSX transformation, copying/deleting of resources, etc.
+Stages the App so it's ready for release and avoid any build steps at development time to improve the simplicity and speed of the development workflow. 
+This alias task is made up of small, simple tasks that use Gulp to perform the necessary tasks like calling Webpack to process resources, compile TypeScript, minify js/css, copying/deleting of resources, etc.
 
-The bundling searches for assets in any `**/*.html` file and follows build comments to minify and replace references. This enables simple use of debug JS files whilst still having control how our resources minify.
+As this template leverages Webpack to package the application you won't need to modify `index.template.ejs` manually as the 
+bundled resources are automatically injected into the generated `index.html` page.
 
-```html
-<!-- build:js system.js -->
-<script src="jspm_packages/system.js"></script>
-<!-- endbuild -->
-
-<script src="config.js"></script>
-
-<!-- build:remove -->
-<script src="deps.lib.js"></script>
-<!-- endbuild -->
-	
-<!-- htmlbuild:appbundle -->
-<!-- endbuild -->
-
-<script src="platform.js"></script>
-	
-<script>
-    System.import("./src/app");
-</script>
-```
-
-Since we are using JSPM and TypeScript/TSX files, when we add new files/components to our application, we don't have 
-to update the `default.html` as JSPM will pickup any new files used by your application. If you find initial load times 
-are slow due to lots of network requests, run the `00-update-deps-js` Gulp task, this will pull in the library 
-dependencies of your application and greatly reduce the number of network requests JSPM will have to perform during 
-your whilst developing locally. See more info in the 
-[TypeScript Redux introduction](https://github.com/ServiceStackApps/typescript-redux#preloading-dependencies).
-
-Should you need to extend the Gulp task to copy additional resources you can specify additional them in
-the `COPY_FILES` rules at the top of 
-[Gulpfile.js](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/Gulpfile.js):
+Normally all client assets would be bundled and copied by Webpack but should you need to extend the Gulp task 
+to copy additional resources you can specify additional them in the `COPY_FILES` rules at the top of 
+[webpack.config.js](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/webpack.config.js):
 
 ```js
-var argv = require('yargs').argv;
-var WEB = 'web';
-var NATIVE = 'native';
-
-var webBuildDir = argv.serviceStackSettingsDir || './wwwroot_build/';
-
 var COPY_FILES = [
-    { src: './bin/**/*', dest: 'bin/', host: WEB },
-    { src: './img/**/*', dest: 'img/' },
-    { src: './App_Data/**/*', dest: 'App_Data/', host: WEB },
-    { src: './Global.asax', host: WEB },
-    { src: './jspm_packages/npm/bootstrap@3.2.0/dist/fonts/*.*', dest: 'lib/fonts/' },
-    { src: ['./config.js', './platform.js', './platform.css'], dest: '/', host: WEB },
-    { src: webBuildDir + 'deploy/*.*', host: WEB },
-    {
-        src: './web.config',
-        host: [WEB],
-        afterReplace: [{
-            from: '<compilation debug="true" targetFramework="4.5"',
-            to: '<compilation targetFramework="4.5"'
-        }]
+    { from: 'bin/**/*',                  to: 'wwwroot' },
+    { from: 'App_Data/**/*',             to: 'wwwroot' },
+    { from: 'Global.asax',               to: 'wwwroot' },
+    { from: 'wwwroot_build/deploy/**/*', to: 'wwwroot', flatten: true },
+    { from: 'platform.*',                to: 'wwwroot' },
+    { from: 'Web.config',                to: 'wwwroot',
+      transform: (content, path) => toString(content).replace(
+          '<compilation debug="true"',
+          '<compilation'
+      )
     }
 ];
 ```
-
-You can specify a `host` to copy the resources to either the Web `wwwroot` or the Native `DefaultApp.Resources` 
-project, otherwise leave it empty to copy it to both.
 
 ### 02-package-console
 
@@ -725,16 +661,20 @@ If your Console Application requires additional .NET .dlls they'll also need to 
 [package-deploy-console.bat](https://github.com/ServiceStackApps/ReactDesktopApps/blob/master/src/DefaultApp/DefaultApp/DefaultApp/wwwroot_build/package-deploy-console.bat):
 
 ```bat
-IF EXIST staging-console (
-RMDIR /S /Q .\staging-console
+SET STAGING=staging-console
+
+IF EXIST %STAGING%\ (
+RMDIR /S /Q .\%STAGING%
+) ELSE IF EXIST %STAGING% (
+DEL /s %STAGING%
 )
 
-MD staging-console
+MD %STAGING%
 
 SET TOOLS=.\tools
-SET OUTPUTNAME=DefaultApp.Console.exe
+SET OUTPUTNAME=DefaultApp-console.exe
 SET ILMERGE=%TOOLS%\ILMerge.exe
-SET RELEASE=..\..\DefaultApp.AppConsole\bin\x86\Release
+SET RELEASE=..\..\DefaultApp.AppConsole\bin\Release
 SET INPUT=%RELEASE%\DefaultApp.AppConsole.exe
 SET INPUT=%INPUT% %RELEASE%\DefaultApp.Resources.dll
 SET INPUT=%INPUT% %RELEASE%\DefaultApp.ServiceInterface.dll
@@ -747,15 +687,14 @@ SET INPUT=%INPUT% %RELEASE%\ServiceStack.Interfaces.dll
 SET INPUT=%INPUT% %RELEASE%\ServiceStack.Server.dll
 SET INPUT=%INPUT% %RELEASE%\ServiceStack.OrmLite.dll
 SET INPUT=%INPUT% %RELEASE%\ServiceStack.Redis.dll
-SET INPUT=%INPUT% %RELEASE%\System.Web.Razor.dll
 
-%ILMERGE% /target:exe /targetplatform:v4,"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5" /out:staging-console\%OUTPUTNAME% /ndebug %INPUT% 
+%ILMERGE% /target:exe /targetplatform:v4,"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5" /out:%STAGING%\%OUTPUTNAME% /ndebug %INPUT% 
 
 IF NOT EXIST apps (
 MD apps
 )
 
-COPY /Y .\staging-console\%OUTPUTNAME% .\apps\DefaultApp-console.exe
+COPY /Y .\%STAGING%\%OUTPUTNAME% .\apps\
 ```
 
 ### 02-package-winforms
@@ -770,23 +709,24 @@ The template is already setup to easily enable auto updates for your application
 <configuration>
   ...
   <appSettings>
-    <add key="EnableAutoUpdate" value="true" />
-    <add key="UpdateManagerUrl" value="https://github.com/{Name}/{AppName}"/>
+    <add key="EnableAutoUpdate" value="false" />
+    <add key="UpdateManagerUrl" value="{ReleaseFolderUrl}"/>
   </appSettings>
 </configuration>
 ```
 
-To package the Windows application we can use a preconfigured Gulp task called **02-package-winforms**. This will build all the required resources for your application and package them into a `Setup.exe` Windows installer. These files are located in the main project under **wwwroot_build\apps\winforms-installer**. The **Releases** folder contains all the distributables of your Windows application. 
+To package the Windows application we can use a preconfigured Gulp task called **02-package-winforms**. This will build all the required resources for your application and package them into a `Setup.exe` Windows installer. 
+These files are located in the main project under **wwwroot_build\apps\winforms-installer**. The **Releases** folder contains all the distributables of your Windows application. 
 
 ```
-MyReactApp
-\wwwroot_build
-  \apps
-    \winforms-installer
-      \Releases
-        \MyReactApp-1.0.0.0-full.nupkg
-        \RELEASES
-        \Setup.exe 
+/DefaultApp
+  /wwwroot_build
+    /apps
+      /winforms-installer
+        /Releases
+          DefaultApp-1.0.0.0-full.nupkg
+          RELEASES
+          Setup.exe 
 ```
 
 ### Releasing an update to WinForms application
@@ -795,18 +735,14 @@ To publish your initial version to GitHub, create a [Release in GitHub](https://
 
 ![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/servicestackvs/react-desktop-apps-release1.png)
 
-Steps to update your application, eg to 1.1, would be the following.
+The steps to update your application to a 1.1 release include:
 
-- 1. Update the version of the AppWinForms project, either directly in `Properties/AssemblyInfo.cs` or through Project properties GUI.
-- 2. Save changes and run the `02-package-winforms` Gulp task.
- 
-![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/servicestackvs/react-desktop-gulp-squirrel-package.png)
+ 1. Update the version of the AppWinForms project, either directly in `Properties/AssemblyInfo.cs` or through Project properties GUI.
+ 2. Save changes and run the `02-package-winforms` Gulp task.
+ 3. Commit your changes and push them to GitHub. (**This is required due to the new tag needs to be on a different commit**)
+ 4. Create a new GitHub release and include the same 3 files, plus the **delta** NuGet package. Clients running `1.0.0.0` will detect the new version and updates can be easily managed with Squirrel.Windows.
 
-
-- 3. Commit your changes and push them to GitHub. (**This is required due to the new tag needs to be on a different commit**)
-- 4. Create a new GitHub release and include the same 3 files, plus the **delta** NuGet package. Clients running `1.0.0.0` will detect the new version and updates can be easily managed with Squirrel.Windows.
-
->During step 2 your new version is picked up by the Gulp task and Squirrel creates a delta NuGet package, eg `MyReactApp-1.1.0.0-delta.nupkg` which will be used for quick updates to clients on the previous version (1.0). 
+> During step 2 your new version is picked up by the Gulp task and Squirrel creates a delta NuGet package, eg `DefaultApp-1.1.0.0-delta.nupkg` which will be used for quick updates to clients on the previous version (1.0). 
 
 ![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/servicestackvs/react-desktop-apps-release2.png)
 
@@ -815,16 +751,21 @@ Users that have installed version `1.0.0.0` will see a prompt already setup in t
 ![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/servicestackvs/auto-update-preview.gif)
 
 ### 03-deploy-app
-This Gulp task uses the same conventions as those found in the AngularJS and ReactApp template in ServiceStackVS. WebDeploy is used to deploy the application from the staged `wwwroot` folder to an existing IIS application. Config for the deployment, eg the IIS Server address, application name, username and password is located in the `/wwwroot_build/publish/config.js`. 
 
-    {
-        "iisApp": "YourAppName",
-        "serverAddress": "deploy-server.example.com",
-        "userName": "{WebDeployUserName}",
-        "password" : "{WebDeployPassword}"
-    }
+This Gulp task MS WebDeploy to deploy the application from the staged `wwwroot` folder to an existing IIS application. 
+Config for the deployment, eg the IIS Server address, application name, username and password is located in the `/wwwroot_build/publish/config.json`. 
 
-If you are using **Github's default Visual Studio ignore, this file will not be included in source control** due to the default rule of `publish/` to be ignored. You should check your Git Repository `.gitignore` rules before committing any potentially sensitive information into public source control.
+```json
+{
+    "iisApp": "YourAppName",
+    "serverAddress": "deploy-server.example.com",
+    "userName": "{WebDeployUserName}",
+    "password" : "{WebDeployPassword}"
+}
+```
+
+If you are using **Github's default Visual Studio ignore, this file will not be included in source control** due to the default rule of `publish/` to be ignored. 
+You should check your Git Repository `.gitignore` rules before committing any potentially sensitive information into public source control.
 
 This task shows a quick way of updating your development server quickly after making changes to your application. For more information on use web-deploy using either Gulp or just Visual Studio publish, see [WebDeploy with AWS](https://github.com/ServiceStack/ServiceStack/wiki/Simple-Deployments-to-AWS-with-WebDeploy).
 
@@ -832,6 +773,7 @@ This task shows a quick way of updating your development server quickly after ma
 
 For more info on working with React, see the 
 [Intro to React docs](https://github.com/ServiceStackApps/Chat-React#introducing-reactjs) on the Chat-React project. 
+
 # Example Apps
 
 Gistlyn is a C# Gist IDE for creating, running and sharing stand-alone, executable C# snippets.
