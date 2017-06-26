@@ -29,10 +29,8 @@ on Windows.
 
 Each application is compiled into a single executable that's xcopy-able and runnable directly without a 
 Software install. The only pre-requisite is the .NET 4.5 Framework on Windows
-(pre-installed on recent versions of Windows) or 
-[Mono on Linux](http://www.mono-project.com/docs/getting-started/install/linux/). 
-The OSX Cocoa **Xamarin.Mac** App has the option to bundle the Mono runtime alleviating the need for users to
-have an existing install of Mono.
+(pre-installed on recent versions of Windows). Whilst the OSX Cocoa **Xamarin.Mac** App bundles the Mono runtime 
+alleviating the need for users to have an existing install of Mono.
 
 ### React Desktop App VS.NET Template
 
