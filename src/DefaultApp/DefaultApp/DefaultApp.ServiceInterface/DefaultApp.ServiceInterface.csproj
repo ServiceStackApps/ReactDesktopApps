@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8572CFBA-0F3E-475F-B008-DEB9894B3475}</ProjectGuid>
+    <ProjectGuid>{8ABE06A9-A99F-425E-AA34-06F63FA3B20F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DefaultApp.ServiceInterface</RootNamespace>
@@ -72,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DefaultApp.ServiceModel\DefaultApp.ServiceModel.csproj">
-      <Project>{08bef328-ab7d-48d3-800d-48acc75c7914}</Project>
+      <Project>{12C8E3F7-28C4-4DD6-B329-2C8AEFFBAD13}</Project>
       <Name>DefaultApp.ServiceModel</Name>
     </ProjectReference>
   </ItemGroup>

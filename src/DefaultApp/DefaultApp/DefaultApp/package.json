@@ -1,5 +1,5 @@
 {
-  "name": "DefaultApp",
+  "name": "default-app",
   "version": "0.0.1",
   "scripts": {
     "postinstall": "gulp www-postinstall",
@@ -14,7 +14,7 @@
   },
   "jest": {
     "globals": {
-      "BaseUrl": "http://localhost:57122/"
+      "BaseUrl": "http://localhost:65192/"
     },
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
