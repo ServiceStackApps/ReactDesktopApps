@@ -10,7 +10,7 @@ native experience and OS Integration possible from a Native Desktop App - all in
 ![React Desktop Apps](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/gap/react-desktop-splash.png)
 
 The new **React Desktop Apps** template in 
-[ServiceStackVS](https://github.com/ServiceStack/ServiceStackVS) 
+[ServiceStackVS VS.NET Templates](http://docs.servicestack.net/templates-overview) 
 provides everything you need to package your ASP.NET ServiceStack Web App into a native Windows **Winforms App**, 
 an **OSX Cocoa Desktop App** or cross-platform (Windows/OSX/Linux) "headless" **Console App** which instead of being 
 embedded inside a Native UI, launches the User's prefered Web Browser for its Web UI. The **Winforms App** also 
@@ -60,7 +60,7 @@ allowing for a simplified and iterative dev workflow by running the preferred Ho
 ## Project Structure
 
 The resulting project structure is the same as the 
-[Webpack React App VS.NET Template](/templates-single-page-apps), 
+[Webpack React App VS.NET Template](http://docs.servicestack.net/templates-single-page-apps), 
 but with 3 additional projects for hosting the new Desktop and Console Apps and a Common **Resources** project
 shared by Host projects containing all the ASP.NET resources (e.g. .css, .js, images, etc) as embedded
 resources. It's kept in-sync with the primary **DefaultApp** project with the `01-bundle-all` or `default` 
